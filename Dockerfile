@@ -2,11 +2,11 @@ ARG BDB_VERSION="5.3.28.NC"
 
 FROM lepetitbloc/bdb:${BDB_VERSION}
 
-ENV WALLET "artax"
-ENV REPOSITORY "https://github.com/Artax-Project/Artax.git"
-ENV HOME /home/$WALLET
+ENV WALLET="artax" \
+    REPOSITORY="https://github.com/Artax-Project/Artax.git"
 
-RUN groupadd -r $WALLET && useradd --no-log-init -r -g $WALLET $WALLET \
+RUN HOME /home/$WALLET \
+&& groupadd -r $WALLET && useradd --no-log-init -r -g $WALLET $WALLET \
 && mkdir /home/$WALLET && chown $WALLET:$WALLET /home/$WALLET \
 && apt-get update -y && apt-get install -y \
     libssl-dev \
@@ -39,4 +39,4 @@ COPY conf $HOME/conf
 
 WORKDIR $HOME
 
-CMD "${HOME}/bin/${WALLET}d -reindex -printtoconsole --datadir=${HOME}/data -conf=${HOME}/conf/wallet.conf --mnconf=${HOME}/conf/masternode.conf"
+CMD "${HOME}/bin/${WALLET}d -rescan -printtoconsole --datadir=${HOME}/data -conf=${HOME}/conf/wallet.conf --mnconf=${HOME}/conf/masternode.conf"
