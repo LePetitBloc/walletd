@@ -5,7 +5,7 @@ FROM lepetitbloc/bdb:${BDB_VERSION}
 ENV WALLET="artax" \
     REPOSITORY="https://github.com/Artax-Project/Artax.git"
 
-RUN HOME /home/$WALLET \
+RUN HOME=/home/$WALLET \
 && groupadd -r $WALLET && useradd --no-log-init -r -g $WALLET $WALLET \
 && mkdir /home/$WALLET && chown $WALLET:$WALLET /home/$WALLET \
 && apt-get update -y && apt-get install -y \
