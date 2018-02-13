@@ -1,5 +1,21 @@
 # Headless Artax
 Headless Artax Wallet dockerfile.
 
-# Dependency
-- use Berkeley DB v5.3.28.NC as a base image https://github.com/LePetitBloc/bdb/tree/5.3.28.NC
+# Usage
+## Setup Artax as a masternode
+```
+@todo
+```
+
+# Parent image
+- Berkeley DB v5.3.28.NC
+`FROM lepetitbloc/bdb:5.3.28.NC`
+> https://github.com/LePetitBloc/bdb/tree/5.3.28.NC
+> https://hub.docker.com/r/lepetitbloc/bdb/
+
+# Resources
+- https://bitcointalk.org/index.php?topic=2770033.0
+- https://github.com/Artax-Project/Artax
+
+# Licence
+MIT
