@@ -7,7 +7,7 @@
 Headless Artax Wallet dockerfile.
 
 # Usage
-## Setup Artax as a masternode
+## Setup Artax masternode
 ```
 @todo
 ```
