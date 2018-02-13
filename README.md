@@ -24,3 +24,5 @@ Headless Artax Wallet dockerfile.
 
 # Licence
 MIT
+
+[hub]: https://hub.docker.com/r/lepetitbloc/artax/
