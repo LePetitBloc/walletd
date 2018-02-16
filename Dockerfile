@@ -22,13 +22,13 @@ RUN HOME=/home/$WALLET \
     automake \
     pkg-config \
     git \
-&& rm -rf /var/lib/apt/lists/* \
-&& USE_UPNP=1 \
-&& cd /home/$WALLET
+&& rm -rf /var/lib/apt/lists/*
 
 USER $WALLET
 
-RUN git clone $REPOSITORY wallet \
+RUN USE_UPNP=1
+&& cd /home/$WALLET \
+&& git clone $REPOSITORY wallet \
 && cd wallet/src \
 && make -f makefile.unix \
 && strip ${WALLET}d \
