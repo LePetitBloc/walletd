@@ -36,6 +36,6 @@ RUN USE_UPNP=1 \
 
 COPY conf $HOME/conf
 
-WORKDIR $HOME
+WORKDIR $${HOME}
 
 CMD "${HOME}/bin/${WALLET}d -rescan -printtoconsole --datadir=${HOME}/data -conf=${HOME}/conf/wallet.conf --mnconf=${HOME}/conf/masternode.conf"
