@@ -5,9 +5,8 @@ FROM lepetitbloc/bdb:${BDB_VERSION}
 ENV WALLET="artax" \
     REPOSITORY="https://github.com/Artax-Project/Artax.git"
 
-RUN HOME=/home/$WALLET \
-&& groupadd -r $WALLET && useradd --no-log-init -r -g $WALLET $WALLET \
-&& mkdir /home/$WALLET && chown $WALLET:$WALLET /home/$WALLET \
+RUN useradd -lrUm $WALLET \
+&& HOME=/home/$WALLET \
 && apt-get update -y && apt-get install -y \
     libssl-dev \
     libboost-system-dev \
@@ -26,7 +25,7 @@ RUN HOME=/home/$WALLET \
 
 USER $WALLET
 
-RUN USE_UPNP=1
+RUN USE_UPNP=1 \
 && cd /home/$WALLET \
 && git clone $REPOSITORY wallet \
 && cd wallet/src \
