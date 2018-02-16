@@ -31,11 +31,11 @@ RUN USE_UPNP=1 \
 && cd wallet/src \
 && make -f makefile.unix \
 && strip ${WALLET}d \
-&& mkdir -p $HOME/data $HOME/backup $HOME/conf $HOME/bin \
-&& mv ${WALLET}d $HOME/bin
+&& mkdir -p ${HOME}/data ${HOME}/backup ${HOME}/bin ${HOME}/conf \
+&& mv ${WALLET}d ${HOME}/bin
 
-COPY conf $HOME/conf
+COPY conf /home/artax/conf
 
-WORKDIR $${HOME}
+WORKDIR /home/artax
 
-CMD "${HOME}/bin/${WALLET}d -rescan -printtoconsole --datadir=${HOME}/data -conf=${HOME}/conf/wallet.conf --mnconf=${HOME}/conf/masternode.conf"
+CMD ${HOME}/bin/${WALLET}d -rescan -printtoconsole --datadir=${HOME}/data -conf=${HOME}/conf/wallet.conf --mnconf=${HOME}/conf/masternode.conf
