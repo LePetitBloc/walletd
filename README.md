@@ -1,10 +1,10 @@
-# Headless Artax Wallet
+# Artax Daemon (`artaxd`)
 
 [![Docker Build Status](https://img.shields.io/docker/build/lepetitbloc/artax.svg)][hub]
 [![Docker Stars](https://img.shields.io/docker/stars/lepetitbloc/artax.svg)][hub]
 [![Docker Pulls](https://img.shields.io/docker/pulls/lepetitbloc/artax.svg)][hub]
 
-Headless Artax Wallet dockerfile.
+Artax Daemon for headless wallet and masternode.
 
 # Usage
 ## Setup Artax masternode

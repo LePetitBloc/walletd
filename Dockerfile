@@ -46,5 +46,5 @@ WORKDIR $HOME
 
 COPY conf conf
 
-ENTRYPOINT "bin/${WALLET}d"
+ENTRYPOINT ["bin/artaxd"]
 CMD ["-rescan", "-printtoconsole", "--datadir=data", "-conf=../conf/wallet.conf", "--mnconf=../conf/masternode.conf"]
