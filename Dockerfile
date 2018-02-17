@@ -1,13 +1,17 @@
 ARG BDB_VERSION="5.3.28.NC"
 
-FROM lepetitbloc/bdb:${BDB_VERSION}
+FROM lepetitbloc/bdb:$BDB_VERSION
 
-ENV WALLET="artax" \
-    REPOSITORY="https://github.com/Artax-Project/Artax.git"
+ARG WALLET="artax"
+ARG USE_UPNP=1
+ARG REPOSITORY="https://github.com/Artax-Project/Artax.git"
 
-RUN useradd -lrUm $WALLET \
-&& HOME=/home/$WALLET \
-&& apt-get update -y && apt-get install -y \
+ENV WALLET=$WALLET \
+    HOME=/home/$WALLET
+
+EXPOSE 21527 21528
+
+RUN apt-get update -y && apt-get install -y \
     libssl-dev \
     libboost-system-dev \
     libboost-filesystem-dev \
@@ -21,21 +25,26 @@ RUN useradd -lrUm $WALLET \
     automake \
     pkg-config \
     git \
-&& rm -rf /var/lib/apt/lists/*
+&& rm -rf /var/lib/apt/lists/* \
+&& useradd -lrUm $WALLET
 
 USER $WALLET
 
-RUN USE_UPNP=1 \
-&& cd /home/$WALLET \
-&& git clone $REPOSITORY wallet \
-&& cd wallet/src \
-&& make -f makefile.unix \
+WORKDIR $HOME
+
+RUN mkdir -p data bin conf \
+&& git clone --depth 1 $REPOSITORY wallet
+
+WORKDIR $HOME/wallet/src
+
+RUN make -f makefile.unix \
 && strip ${WALLET}d \
-&& mkdir -p ${HOME}/data ${HOME}/backup ${HOME}/bin ${HOME}/conf \
-&& mv ${WALLET}d ${HOME}/bin
+&& mv ${WALLET}d $HOME/bin \
+&& rm -rf wallet
 
-COPY conf /home/artax/conf
+WORKDIR $HOME
 
-WORKDIR /home/artax
+COPY conf conf
 
-CMD ${HOME}/bin/${WALLET}d -rescan -printtoconsole --datadir=${HOME}/data -conf=${HOME}/conf/wallet.conf --mnconf=${HOME}/conf/masternode.conf
+ENTRYPOINT "bin/${WALLET}d"
+CMD ["-rescan", "-printtoconsole", "--datadir=data", "-conf=../conf/wallet.conf", "--mnconf=../conf/masternode.conf"]
