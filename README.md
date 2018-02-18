@@ -67,7 +67,7 @@ change the `rpcpassord` and fill the `masternodeprivkey` key with your **mastern
 
 4. Run the image:
 ```
-docker run --rm -p 21527:21527 -p 21528:21528 -h artax-mn01 --name artax-mn01 -v ~/artax/data:/home/artax/data -v ~/artax/conf:/home/artax/conf artax
+docker run --rm -p 21527:21527 -p 21528:21528 -h artax-mn01 --name artax-mn01 -v ~/artax/data:/home/artax/data -v ~/artax/conf:/home/artax/conf lepetitbloc/artax
 ```
 
 > If you get the following error:
