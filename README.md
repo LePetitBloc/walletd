@@ -8,6 +8,8 @@ Artax Daemon for headless wallet and masternode.
 
 ## Usage
 
+These steps will guide you through the setup of a **Control Wallet** and a **masternode**.
+
 ### Prerequisites
 1. You must have a wallet installed and synced (on your local machine for instance),
 i.e. the **Control Wallet**.
