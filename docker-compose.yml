@@ -1,0 +1,40 @@
+version: '3'
+services:
+  wallet:
+    build:
+      context: .
+      args:
+        WALLET: "artax"
+        REPOSITORY: "https://github.com/Artax-Project/Artax.git"
+    restart: always
+    ports:
+      - 21527:9999
+      - 21528:9998
+    command: [
+      "-rpcuser=walletrpc",
+      "-rpcpassword=4VvDhcoqFUcZbmkWUMJz8P443WLfoaMmiREKSByJaT4j",
+      "-rpcallowip=127.0.0.1",
+      "-server=1",
+      "-listen=0",
+      "-masternode=0",
+    ]
+    volumes:
+      - ./wallet/:/home/wallet/
+  masternode:
+    build:
+      context: .
+      args:
+        WALLET: "artax"
+        REPOSITORY: "https://github.com/Artax-Project/Artax.git"
+    restart: always
+    ports:
+      - 21529:9999
+    command: [
+      "-server=0",
+      "-listen=1",
+      "-masternode=1",
+      "-masternodeprivkey=YourMasternodePrivKey",
+      "-addnode=115.75.5.106:21526",
+    ]
+    volumes:
+      - ./masternode/:/home/wallet/
