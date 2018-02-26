@@ -26,9 +26,9 @@ RUN apt-get update -y && apt-get install -y \
     pkg-config \
     git \
 && rm -rf /var/lib/apt/lists/* \
-&& useradd -lrUm $WALLET
+&& useradd -lrUm wallet
 
-USER $WALLET
+USER wallet
 
 WORKDIR $HOME
 
@@ -39,12 +39,12 @@ WORKDIR $HOME/wallet/src
 
 RUN make -f makefile.unix \
 && strip ${WALLET}d \
-&& mv ${WALLET}d $HOME/bin \
+&& mv ${WALLET}d $HOME/bin/walletd \
 && rm -rf wallet
 
 WORKDIR $HOME
 
 COPY conf conf
 
-ENTRYPOINT ["bin/artaxd"]
+ENTRYPOINT ["bin/walletd"]
 CMD ["-rescan", "-printtoconsole", "--datadir=data", "-conf=../conf/wallet.conf", "--mnconf=../conf/masternode.conf"]
