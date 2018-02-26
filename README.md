@@ -1,10 +1,6 @@
-# Artax Daemon (`artaxd`)
+# Cross Wallet Daemon (`walletd`)
 
-[![Docker Build Status](https://img.shields.io/docker/build/lepetitbloc/artax.svg)][hub]
-[![Docker Stars](https://img.shields.io/docker/stars/lepetitbloc/artax.svg)][hub]
-[![Docker Pulls](https://img.shields.io/docker/pulls/lepetitbloc/artax.svg)][hub]
-
-Artax Daemon for headless wallet and masternode.
+Cross Wallet Daemon for headless wallets and masternodes.
 
 ## Usage
 
@@ -13,12 +9,11 @@ These steps will guide you through the setup of a **Control Wallet** and a **mas
 ### Prerequisites
 1. You must have a wallet installed and synced (on your local machine for instance),
 i.e. the **Control Wallet**.
-> This part is not covered here but you can find the appropriate instructions there https://github.com/Artax-Project/Artax/blob/master/doc/readme-qt.rst
 
-2. You must receive the required 2500 ARTX in a single transaction on your **Control Wallet** and wait for at least 1 confirmation.
-> **Note1:** If you already have the 2500 ARTX but it came from multiple transactions, you can send the 2500 ARTX to yourself.
+2. You must receive the *required number of tokens* for the **masternode** in a single transaction on your **Control Wallet** and wait for at least 1 confirmation.
+> **Note1:** If you already have the *required number of tokens* but it came from multiple transactions, you can send the *required number of tokens* to yourself.
 
-> **Note2:** Beware of the transaction cost of `0.000001` ARTX, you should own 2501 ARTX as a safety measure.
+> **Note2:** Beware of the transaction cost, you should own the *required number of tokens plus 1* as a safety measure.
 
 ### Setup the **Control Wallet**
 
@@ -46,7 +41,7 @@ Keep this output somewhere.
 
 #### Prepare the **Masternode** configuration
 1. Close your **Control Wallet**
-2. Edit `~/.Artax/masternode.conf`
+2. Edit `~/.Wallet/masternode.conf`
 ```
 mn01 YOUR.SERVER.IP:21527 YouMasterNodePrivateKey TransactionHash TransactionIndex YourWalletAddress:100
 ```
@@ -59,17 +54,18 @@ These steps consist in setting up the machine which will run the **masternode**:
 > https://docs.docker.com/install/
 > https://docs.docker.com/v17.09/engine/installation/linux/linux-postinstall/
 
-2. Create an `artax` folder:
+2. Create a `wallet` folder :
+> where `wallet` is the name of your wallet.
 ```
-mkdir ~/artax
+mkdir ~/wallet
 ```
 
-3. Create the configuration file `~/artax/conf/wallet.conf` based on [the provided configuration template](conf/wallet.conf),
+3. Create the configuration file `~/wallet/conf/wallet.conf` based on [the provided configuration template](conf/wallet.conf),
 change the `rpcpassord` and fill the `masternodeprivkey` key with your **masternode** private key.
 
 4. Run the image:
 ```
-docker run --rm -p 21527:21527 -p 21528:21528 -h artax-mn01 --name artax-mn01 -v ~/artax/data:/home/artax/data -v ~/artax/conf:/home/artax/conf lepetitbloc/artax
+docker run --rm -p 21527:21527 -p 21528:21528 -h wallet-mn01 --name wallet-mn01 -v ~/wallet/data:/home/wallet/data -v ~/wallet/conf:/home/wallet/conf lepetitbloc/walletd
 ```
 
 > If you get the following error:
@@ -77,7 +73,7 @@ docker run --rm -p 21527:21527 -p 21528:21528 -h artax-mn01 --name artax-mn01 -v
 > ************************
 > EXCEPTION: N5boost12interprocess22interprocess_exceptionE
 > No such file or directory
-> Artax in AppInit()
+> Wallet in AppInit()
 >
 >terminate called after throwing an instance of 'boost::interprocess::interprocess_exception'
 >  what():  No such file or directory
@@ -86,7 +82,7 @@ docker run --rm -p 21527:21527 -p 21528:21528 -h artax-mn01 --name artax-mn01 -v
 >************************
 >EXCEPTION: N5boost12interprocess22interprocess_exceptionE
 >No such file or directory
->Artax in AppInit()
+>Wallet in AppInit()
 >```
 > Make sure the `data` folder is *writable* for the container.
 
@@ -99,11 +95,5 @@ Get back to your **Control wallet** **unlock it** and start your **masternode**.
 > https://github.com/LePetitBloc/bdb/tree/5.3.28.NC
 > https://hub.docker.com/r/lepetitbloc/bdb/
 
-## Resources
-- https://bitcointalk.org/index.php?topic=2770033.0
-- https://github.com/Artax-Project/Artax
-
 ## Licence
 MIT
-
-[hub]: https://hub.docker.com/r/lepetitbloc/artax/
