@@ -1,6 +1,6 @@
 version: '3'
 services:
-  wallet:
+  control_wallet:
     build:
       context: .
       args:
