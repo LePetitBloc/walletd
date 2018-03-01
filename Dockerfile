@@ -25,6 +25,7 @@ RUN apt-get update -y && apt-get install -y \
     automake \
     pkg-config \
     git \
+    bsdmainutils \
 && rm -rf /var/lib/apt/lists/* \
 && useradd -lrUm wallet \
 && git clone --depth 1 $REPOSITORY /wallet

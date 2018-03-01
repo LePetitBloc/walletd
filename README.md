@@ -29,6 +29,7 @@ docker build -t mywallet --build-arg WALLET="mywallet" --build-arg REPOSITORY="h
 docker run wallet -rpcuser=walletrpc -rpcpassword=4VvDhcoqFUcZbmkWUMJz8P443WLfoaMmiREKSByJaT4j
 ```
 > We recommend mounting a volume for easier access to the *data* and the *configuration*.
+>
 > `docker run wallet -v ./wallet:/home/wallet/ -rpcuser=walletrpc -rpcpassword=4VvDhcoqFUcZbmkWUMJz8P443WLfoaMmiREKSByJaT4j`
 
 > :warning: Make sur the host directory contains at least an empty, *writable* `data` directory.
