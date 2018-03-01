@@ -8,7 +8,7 @@ The container can be either used as a simple headless wallet or a **masternode**
 in the *command* will differ.
 
 > **Pro Tip:** This repository can be used as is or you can fork it to create your specific wallet implementation.
-> Check for [existing wallet implementation](##Wallet-implementations) before creating a new one:
+> Check for [existing wallet implementation](#Wallet-implementations) before creating a new one:
 
 ### Headless wallet
 
