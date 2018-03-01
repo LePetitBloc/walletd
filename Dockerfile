@@ -2,9 +2,9 @@ ARG BDB_VERSION="5.3.28.NC"
 
 FROM lepetitbloc/bdb:$BDB_VERSION
 
-ARG WALLET="artax"
+ARG WALLET="wallet"
 ARG USE_UPNP=1
-ARG REPOSITORY="https://github.com/Artax-Project/Artax.git"
+ARG REPOSITORY="https://github.com/org/wallet.git"
 
 ENV WALLET=$WALLET \
     HOME=/home/wallet
@@ -22,6 +22,7 @@ RUN apt-get update -y && apt-get install -y \
     libminiupnpc-dev \
     libqrencode-dev \
     libgmp-dev \
+    libevent-dev \
     automake \
     pkg-config \
     git \

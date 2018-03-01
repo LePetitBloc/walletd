@@ -4,8 +4,8 @@ services:
     build:
       context: .
       args:
-        WALLET: "artax"
-        REPOSITORY: "https://github.com/Artax-Project/Artax.git"
+        WALLET: "wallet"
+        REPOSITORY: "https://github.com/org/wallet.git" # allow to control your wallet from a remote `goacoin-cli` providing the appropriate `rpcallowip`
     restart: always
     ports:
       - 21527:9999
@@ -24,8 +24,8 @@ services:
     build:
       context: .
       args:
-        WALLET: "artax"
-        REPOSITORY: "https://github.com/Artax-Project/Artax.git"
+        WALLET: "wallet"
+        REPOSITORY: "https://github.com/org/wallet.git"
     restart: always
     ports:
       - 21529:9999
@@ -34,7 +34,7 @@ services:
       "-listen=1",
       "-masternode=1",
       "-masternodeprivkey=YourMasternodePrivKey",
-      "-addnode=115.75.5.106:21526",
+      "-addnode=115.75.5.106",
     ]
     volumes:
       - ./masternode/:/home/wallet/
