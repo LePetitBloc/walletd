@@ -53,7 +53,7 @@ Quite a few **masternode** coin wallets are already available as pre-configured 
 
 * Artax https://github.com/LePetitBloc/artaxd
 * Sparks https://github.com/LePetitBloc/sparksd
-* Goa https://github.com/LePetitBloc/goad
+* Goacoin https://github.com/LePetitBloc/goacoind
 * *Fork this repository, tweak it to suit your needs and get in touch to be referenced here!*
 
 ## Parent image
