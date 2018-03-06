@@ -1,13 +1,14 @@
-ARG BDB_VERSION="5.3.28.NC"
+ARG BDB_VERSION="4.8.30.NC"
 
 FROM lepetitbloc/bdb:$BDB_VERSION
 
-ARG WALLET="wallet"
 ARG USE_UPNP=1
+ARG WALLET="wallet"
+ARG CONF_DIRECTORY="conf/"
 ARG REPOSITORY="https://github.com/org/wallet.git"
 
-ENV WALLET=$WALLET \
-    HOME=/home/wallet
+ENV USE_UPNP=$USE_UPNP \
+    WALLET=$WALLET
 
 EXPOSE 9999 9998
 
@@ -23,33 +24,35 @@ RUN apt-get update -y && apt-get install -y \
     libqrencode-dev \
     libgmp-dev \
     libevent-dev \
+    libzmq3-dev \
     automake \
     pkg-config \
     git \
     bsdmainutils \
 && rm -rf /var/lib/apt/lists/* \
-&& useradd -lrUm wallet \
-&& git clone --depth 1 $REPOSITORY /wallet
+&& useradd -lrUm $WALLET \
+&& git clone --depth 1 $REPOSITORY /tmp/$WALLET
 
-WORKDIR /wallet/src
+WORKDIR /tmp/$WALLET
 
-RUN make -f makefile.unix \
-# strip binaries if exists
-&& strip ${WALLET}d \
-&& if [ -f ${WALLET}-cli ]; then strip ${WALLET}-cli; fi \
-&& if [ -f ${WALLET}-tx ]; then strip ${WALLET}-tx; fi \
-# move binaries
-&& mv ${WALLET}d /usr/local/bin/walletd \
-&& if [ -f ${WALLET}-cli ]; then mv ${WALLET}-cli /usr/local/bin/wallet-cli; fi \
-&& if [ -f ${WALLET}-tx ]; then mv ${WALLET}-tx /usr/local/bin/wallet-tx; fi \
-# clean
-&& rm -rf /wallet
+# build
+RUN chmod +x autogen.sh share/genbuild.sh src/leveldb/build_detect_platform \
+&& ./autogen.sh \
+&& ./configure CPPFLAGS="-I/usr/local/db4/include -O2" LDFLAGS="-L/usr/local/db4/lib" \
+&& make \
+&& strip src/${WALLET}d src/${WALLET}-cli src/${WALLET}-tx \
+&& mv src/${WALLET}d /usr/local/bin/ \
+&& mv src/${WALLET}-cli /usr/local/bin/ \
+&& mv src/${WALLET}-tx /usr/local/bin/ \
+&& rm -rf /tmp/$WALLET
 
-USER wallet
+USER $WALLET
 
 WORKDIR $HOME
 
-RUN mkdir -p data conf
+RUN mkdir -p data $CONF_DIRECTORY
 
-ENTRYPOINT ["/usr/local/bin/walletd", "-rescan", "-printtoconsole", "-logtimestamps=1", "-datadir=data", "-conf=../conf/wallet.conf", "-mnconf=../conf/masternode.conf", "-port=9999", "-rpcport=9998"]
-CMD ["-rpcuser=walletrpc", "-rpcpassword=4VvDhcoqFUcZbmkWUMJz8P443WLfoaMmiREKSByJaT4j", "-rpcallowip=127.0.0.1", "-server=1", "-listen=0", "-masternode=0"]
+COPY wallet/$CONF_DIRECTORY $CONF_DIRECTORY
+
+ENTRYPOINT ["/usr/local/bin/walletd", "-reindex", "-printtoconsole", "-logtimestamps=1", "-datadir=data", "-conf=../conf/wallet.conf", "-mnconf=../conf/masternode.conf", "-port=9999", "-rpcport=9998"]
+CMD ["-rpcallowip=127.0.0.1", "-server=1", "-masternode=0"]
