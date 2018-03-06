@@ -1,9 +1,7 @@
 # Cross Wallet Daemon (`walletd`)
-
 Cross Wallet Daemon for headless wallets and masternodes.
 
 ## Usage
-
 The container can be either used as a simple headless wallet or a **masternode** only the options used
 in the *command* will differ.
 
@@ -11,7 +9,6 @@ in the *command* will differ.
 > Check for [existing wallet implementation](#Wallet-implementations) before creating a new one:
 
 ### Headless wallet
-
 1. First build the *container* with the *arguments* that suit your wallet:
 ```
 git clone git@github.com:LePetitBloc/walletd.git
@@ -35,7 +32,6 @@ docker run wallet -rpcuser=walletrpc -rpcpassword=4VvDhcoqFUcZbmkWUMJz8P443WLfoa
 > :warning: Make sur the host directory contains at least an empty, *writable* `data` directory.
 
 ### Headless control wallet and masternode
-
 The easiest way to setup **both** at the same is to use `docker-compose`.
 Check the provided `docker-compose.yml` as an example and tweak it to your needs!
 
@@ -48,13 +44,17 @@ docker-compose up --build
 just have to pull the images.
 
 ## Wallet implementations
-
 Quite a few **masternode** coin wallets are already available as pre-configured *images* and `docker-compose` files:
 
 * Artax https://github.com/LePetitBloc/artaxd
 * Sparks https://github.com/LePetitBloc/sparksd
 * Goacoin https://github.com/LePetitBloc/goacoind
 * *Fork this repository, tweak it to suit your needs and get in touch to be referenced here!*
+
+## Compatible JSON-RPC clients
+Most of the **masternode** coins are based on **Dash** so any Dash client would do.
+* Promise based Javascript client: [dashd-client](https://github.com/LePetitBloc/dashd-client)
+> See [Dash RPC commands](https://dashpay.atlassian.net/wiki/spaces/DOC/pages/131924073/RPC+commands) for a list of all available commands.
 
 ## Parent image
 - Berkeley DB v5.3.28.NC
